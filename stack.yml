@@ -1,0 +1,59 @@
+version: "3.8"
+services:
+  frontend:
+    image: hypersmoit/idp_frontend
+    ports: 
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - idp_network
+    deploy:
+      replicas: 3
+      placement:
+        max_replicas_per_node: 2
+      update_config:
+        parallelism: 2
+        order: start-first
+      rollback_config:
+        parallelism: 2
+        order: stop-first
+  
+  backend:
+    image: hypersmoit/idp_backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - idp_network
+    deploy:
+      replicas: 3
+      placement:
+        max_replicas_per_node: 2
+      update_config:
+        parallelism: 2
+        order: start-first
+      rollback_config:
+        parallelism: 2
+        order: stop-first
+  
+  db:
+    image: hypersmoit/idp_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: IDP_db
+    ports:
+      - "3307:3306"
+    networks:
+      - idp_network
+    deploy:
+      placement:
+        constraints:
+          - "node.role==manager"
+
+networks:
+  idp_network:  
+
+
+
