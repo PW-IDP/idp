@@ -5,6 +5,7 @@
 - Assure that you can create newer images based on BE & FE updates
 
 # What needs to be done
+- Make DB persistent
 - Loki for logging
 - rabbitMQ
 - pipeline CI/CD
