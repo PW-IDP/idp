@@ -1,0 +1,13 @@
+_format_version: "2.1"
+
+services:
+  - name: backend
+    url: http://backend:8080/api
+    routes:
+      - name: backend-route
+        paths: 
+          - /backend
+          
+plugins:
+  - name: prometheus
+          
