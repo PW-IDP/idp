@@ -27,6 +27,10 @@ services:
       - db
     networks:
       - idp_network
+    environment:
+        SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/proiect?createDatabaseIfNotExist=true
+        SPRING_DATASOURCE_USERNAME: root
+        SPRING_DATASOURCE_PASSWORD: admin
     deploy:
       replicas: 2
       placement:
@@ -39,12 +43,13 @@ services:
         order: stop-first
   
   db:
-    image: hypersmoit/idp_mysql
+    image: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: IDP_db
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: proiect
+      MYSQL_USER: admin
     ports:
-      - "3307:3306"
+      - "3306:3306"
     networks:
       - idp_network
     deploy:
