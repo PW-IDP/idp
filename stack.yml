@@ -2,7 +2,7 @@ version: "3.8"
 services:
   frontend:
     image: hypersmoit/idp_frontend
-    ports: 
+    ports:
       - "3000:3000"
     depends_on:
       - backend
@@ -18,7 +18,7 @@ services:
       rollback_config:
         parallelism: 2
         order: stop-first
-  
+
   backend:
     image: hypersmoit/idp_backend
     ports:
@@ -41,7 +41,7 @@ services:
       rollback_config:
         parallelism: 2
         order: stop-first
-  
+
   db:
     image: mysql
     environment:
@@ -56,13 +56,15 @@ services:
       placement:
         constraints:
           - "node.role==manager"
-  
+    volumes:
+      - db-volume:/var/lib/mysql
+
   kong:
     image: kong:latest
     volumes:
       - ./Kong:/usr/local/kong/declarative
     environment:
-      KONG_DATABASE: 'off' 
+      KONG_DATABASE: 'off'
       KONG_DECLARATIVE_CONFIG: /usr/local/kong/declarative/kong.yml
       KONG_PROXY_ACCESS_LOG: /dev/stdout
       KONG_ADMIN_ACCESS_LOG: /dev/stdout
@@ -93,7 +95,7 @@ services:
         constraints: [node.role == manager]
     networks:
       - idp_network
-  
+
   prometheus:
     image: prom/prometheus
     volumes:
@@ -105,7 +107,7 @@ services:
         constraints: [node.role == manager]
     networks:
       - idp_network
-    
+
   node_exporter:
         image: prom/node-exporter
         deploy:
@@ -123,7 +125,7 @@ services:
             - 9100:9100
         networks:
             - idp_network
-  
+
   cadvisor:
         image: gcr.io/cadvisor/cadvisor
         deploy:
@@ -139,13 +141,9 @@ services:
         networks:
             - idp_network
 
-
-
 volumes:
   grafana-volume:
+  db-volume:
 
 networks:
-  idp_network:  
-
-
-
+  idp_network:
