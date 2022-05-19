@@ -1,15 +1,16 @@
 # What has been done so far
-- Monitoring using Prometheus, Grafana, Node-explorer & CAdvisor
+- monitoring using Prometheus, Grafana, Node-explorer & CAdvisor
 - api gateway
 - docker-swarm for deployment
-- Assure that you can create newer images based on BE & FE updates
+- create newer images based on BE & FE updates
 - persistent DB
 - management of Docker Swarm services with Portainer
+- pipeline CI/CD (no stage for testing yet)
 
 # What needs to be done
 - Loki for logging
 - rabbitMQ
-- pipeline CI/CD
+
 # Contents
 - Kong
 - Prometheus
@@ -45,3 +46,49 @@ To stop the portainer containers run:
 Check that the services in the *portainer* stack are fully created, then access it throught `localhost:9010` in the web browser. Log in using the username *admin* and password *adminidp2022*.
 
 Add a new stack with the name *idp_project* and paste the content of the `stack.yml` file, wait until all services are up and running.
+
+
+# Gitlab CI/CD
+Created two separate repositories for the front-end and back-end and add their own `Dockerfile` to create the images accordingly. Added `.gitlab-ci.yml` in both repos. (the address of the webhook needs to be added manually)
+
+Create images for front-end and back-end and add them to the registry:
+```
+docker login gitlab.cs.pub.ro:5050
+docker build -t gitlab.cs.pub.ro:5050/pw-idp-2022/pw-backend .
+docker push gitlab.cs.pub.ro:5050/pw-idp-2022/pw-backend
+
+docker login gitlab.cs.pub.ro:5050
+docker build -t gitlab.cs.pub.ro:5050/pw-idp-2022/pw-frontend .
+docker push gitlab.cs.pub.ro:5050/pw-idp-2022/pw-frontend
+```
+
+Create the Gitlab runner with the following commands:
+```
+docker run -d --name gitlab-runner --restart always -v gitlab-runner-config:/etc/gitlab-runner -v /var/run/docker.sock:/var/run/docker.sock gitlab/gitlab-runner:latest
+
+docker run --rm -it -v gitlab-runner-config:/etc/gitlab-runner gitlab/gitlab-runner register
+
+# to register use de following:
+# https://gitlab.cs.pub.ro/
+# Registration token
+# Name of the runner
+# Some tags
+# docker
+# docker:19.03
+
+docker run -it -v gitlab-runner-config:/test alpine
+```
+
+Modify the `config.toml` file to grant privileged access.
+```
+privileged = true
+volumes = ["/cache", "/var/run/docker.sock:/var/run/docker.sock"]
+
+```
+
+Restart the runner:
+```
+sudo docker restart gitlab-runner
+```
+
+To test, try making changes for the master branch and see if anything changes. :)
