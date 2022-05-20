@@ -5,11 +5,13 @@
 - create newer images based on BE & FE updates
 - persistent DB
 - management of Docker Swarm services with Portainer
-- pipeline CI/CD (no stage for testing yet)
-
-# What needs to be done
+- pipeline CI/CD (no stage for testing yet) 
 - Loki for logging
 - rabbitMQ
+
+# What needs to be done
+- finish CI/CD
+- add `test` stage in CI/CD
 
 # Contents
 - Kong
