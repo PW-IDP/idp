@@ -95,7 +95,7 @@ To test, try making changes for the master branch and see if anything changes. :
 
 
 # Loki logging
-Adjust the date and period of the logging in the `./configs/loki/loki.yml` file. Make sure that the `./configs/loki/` is created and that it has all permissions:
+Adjust the date and period of the logging in the `./configs/loki/loki.yml` file. Make sure that the `./configs/loki/wal` directory is created and that it has all permissions:
 ```
 -rw-rw-r-- 1 student student 1074 May 19 21:42 loki.yml
 drwxrwxrwx 2 student student 4096 May 20 21:48 wal
