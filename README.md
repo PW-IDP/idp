@@ -7,7 +7,7 @@
 - management of Docker Swarm services with Portainer
 - pipeline CI/CD (no stage for testing yet)
 - Loki for logging
-- 
+
 # What needs to be done
 - rabbitMQ
 
