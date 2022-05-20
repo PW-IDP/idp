@@ -6,9 +6,9 @@
 - persistent DB
 - management of Docker Swarm services with Portainer
 - pipeline CI/CD (no stage for testing yet)
-
-# What needs to be done
 - Loki for logging
+- 
+# What needs to be done
 - rabbitMQ
 
 # Contents
