@@ -160,6 +160,15 @@ services:
         networks:
             - idp_network
 
+  rabbitmq:
+        image: rabbitmq:management-alpine
+        ports:
+            - 5672:5672
+            - 15672:15672
+        networks:
+            - idp_network
+        hostname: rabbitmq
+
 volumes:
   grafana-volume:
   db-volume:
