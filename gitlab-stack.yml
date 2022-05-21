@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   frontend:
-    image: hypersmoit/idp_frontend
+    image: gitlab.cs.pub.ro:5050/pw-idp-2022/pw-frontend
     ports:
       - "3000:3000"
     depends_on:
@@ -20,12 +20,7 @@ services:
         order: stop-first
 
   backend:
-    image: hypersmoit/idp_backend
-    logging:
-            driver: loki
-            options:
-                loki-url: http://127.0.0.1:3100/loki/api/v1/push
-                loki-external-labels: job=pw-idp-backend,owner=mara,environment=development
+    image: gitlab.cs.pub.ro:5050/pw-idp-2022/pw-backend
     ports:
       - "8080:8080"
     depends_on:
@@ -67,7 +62,7 @@ services:
   kong:
     image: kong:latest
     volumes:
-      - /home/hypersmoit/Desktop/idp_pweb/idp/Kong:/usr/local/kong/declarative
+      - ./Kong:/usr/local/kong/declarative
     environment:
       KONG_DATABASE: 'off'
       KONG_DECLARATIVE_CONFIG: /usr/local/kong/declarative/kong.yml
@@ -95,7 +90,6 @@ services:
       - 3001:3000
     depends_on:
       - prometheus
-      - loki
     deploy:
       placement:
         constraints: [node.role == manager]
@@ -105,7 +99,7 @@ services:
   prometheus:
     image: prom/prometheus
     volumes:
-      - /home/hypersmoit/Desktop/idp_pweb/idp/prometheus/config.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/config.yml:/etc/prometheus/prometheus.yml
     ports:
       - 9090:9090
     deploy:
@@ -144,19 +138,6 @@ services:
             - /dev/disk:/dev/disk/:ro
         ports:
             - 8081:8080
-        networks:
-            - idp_network
-
-  loki:
-        image: grafana/loki
-        volumes:
-            - /home/hypersmoit/Desktop/idp_pweb/idp/configs/loki/loki.yml:/etc/config/loki.yml
-            - /home/hypersmoit/Desktop/idp_pweb/idp/configs/loki/wal:/wal
-        entrypoint:
-            - /usr/bin/loki
-            - -config.file=/etc/config/loki.yml
-        ports:
-            - 3100:3100
         networks:
             - idp_network
 
