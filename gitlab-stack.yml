@@ -62,7 +62,7 @@ services:
   kong:
     image: kong:latest
     volumes:
-      - ./Kong:/usr/local/kong/declarative
+      - /home/hypersmoit/Desktop/idp_pweb/idp/Kong:/usr/local/kong/declarative
     environment:
       KONG_DATABASE: 'off'
       KONG_DECLARATIVE_CONFIG: /usr/local/kong/declarative/kong.yml
@@ -99,7 +99,7 @@ services:
   prometheus:
     image: prom/prometheus
     volumes:
-      - ./prometheus/config.yml:/etc/prometheus/prometheus.yml
+      - /home/hypersmoit/Desktop/idp_pweb/idp/prometheus/config.yml:/etc/prometheus/prometheus.yml
     ports:
       - 9090:9090
     deploy:
