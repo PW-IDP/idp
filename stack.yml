@@ -67,7 +67,7 @@ services:
   kong:
     image: kong:latest
     volumes:
-      - /home/student/idp/Kong:/usr/local/kong/declarative
+      - /home/hypersmoit/Desktop/idp_pweb/idp/Kong:/usr/local/kong/declarative
     environment:
       KONG_DATABASE: 'off'
       KONG_DECLARATIVE_CONFIG: /usr/local/kong/declarative/kong.yml
@@ -105,7 +105,7 @@ services:
   prometheus:
     image: prom/prometheus
     volumes:
-      - /home/student/idp/prometheus/config.yml:/etc/prometheus/prometheus.yml
+      - /home/hypersmoit/Desktop/idp_pweb/idp/prometheus/config.yml:/etc/prometheus/prometheus.yml
     ports:
       - 9090:9090
     deploy:
@@ -150,8 +150,8 @@ services:
   loki:
         image: grafana/loki
         volumes:
-            - /home/student/idp/configs/loki/loki.yml:/etc/config/loki.yml
-            - /home/student/idp/configs/loki/wal:/wal
+            - /home/hypersmoit/Desktop/idp_pweb/idp/configs/loki/loki.yml:/etc/config/loki.yml
+            - /home/hypersmoit/Desktop/idp_pweb/idp/configs/loki/wal:/wal
         entrypoint:
             - /usr/bin/loki
             - -config.file=/etc/config/loki.yml
