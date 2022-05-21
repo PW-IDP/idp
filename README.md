@@ -5,8 +5,6 @@
 - create newer images based on BE & FE updates
 - persistent DB
 - management of Docker Swarm services with Portainer
-- pipeline CI/CD (no stage for testing yet) 
-- Loki for logging
 - rabbitMQ
 
 # What needs to be done
@@ -97,7 +95,7 @@ To test, try making changes for the master branch and see if anything changes. :
 
 
 # Loki logging
-Adjust the date and period of the logging in the `./configs/loki/loki.yml` file. Make sure that the `./configs/loki/` is created and that it has all permissions:
+Adjust the date and period of the logging in the `./configs/loki/loki.yml` file. Make sure that the `./configs/loki/wal` directory is created and that it has all permissions:
 ```
 -rw-rw-r-- 1 student student 1074 May 19 21:42 loki.yml
 drwxrwxrwx 2 student student 4096 May 20 21:48 wal
@@ -105,4 +103,4 @@ drwxrwxrwx 2 student student 4096 May 20 21:48 wal
 
 Start the containers by running `run.sh` script and wait for the services to be up and running. In the web browser access `localhost:3001` and enter username `admin` and password `admin`. Then create a `Loki` Data Source using `http://loki:3100` as url.
 
-Access `localhost:30001/explore` to view the logging of the backend container.
+Access `localhost:3001/explore` to view the logging of the backend container.
