@@ -6,11 +6,10 @@
 - persistent DB
 - management of Docker Swarm services with Portainer
 - rabbitMQ
+- Added CI/CD
 
 # What needs to be done
-- finish CI/CD
-- add `test` stage in CI/CD
-
+- Nothing cuz we gud
 # Contents
 - Kong
 - Prometheus
