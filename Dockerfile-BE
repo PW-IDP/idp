@@ -1,0 +1,13 @@
+FROM maven:3.6.0-jdk-11-slim AS build
+RUN mkdir -p /usr/src/app
+RUN mkdir -p /usr/src/app/pw-backend
+
+COPY src /usr/src/app/pw-backend/src
+COPY pom.xml /usr/src/app/pw-backend/
+
+RUN mvn -f /usr/src/app/pw-backend/pom.xml clean package -DskipTests
+
+FROM openjdk:11-jre-slim
+COPY --from=build /usr/src/app/pw-backend/target/backend-0.0.1-SNAPSHOT.jar /usr/local/lib/backend.jar
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","/usr/local/lib/backend.jar"] 

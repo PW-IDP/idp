@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   frontend:
-    image: hypersmoit/idp_frontend
+    image: gitlab.cs.pub.ro:5050/pw-idp-2022/pw-frontend
     ports:
       - "3000:3000"
     depends_on:
@@ -20,7 +20,7 @@ services:
         order: stop-first
 
   backend:
-    image: hypersmoit/idp_backend
+    image: gitlab.cs.pub.ro:5050/pw-idp-2022/pw-backend
     logging:
             driver: loki
             options:
